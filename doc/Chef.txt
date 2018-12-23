@@ -1,0 +1,17 @@
+waitForOrder()
+	if != -1  semDown(sh->waitForOrder)
+		RC enter
+			sh->fSt.st.chefStat = WAIT_FOR_ORDER;
+    		saveState(nFic,&sh->fSt);
+		RC leave
+	semUp(sh->waiterRequestPossible)
+
+ProcessOrder()
+	if foodOrder == 0 -> REST
+
+	if != -1  semDown(sh->waiterRequestPossible)
+		RC enter
+			sh->fSt.st.chefStat = COOK;
+    		saveState(nFic,&sh->fSt);
+		RC leave
+	semUp(sh->waiterRequestPossible)
