@@ -23,7 +23,7 @@
 typedef struct {
     /** \brief request id */
     int reqType;
-    /** \brief group that issues the request (dummy if request source is chef) */
+    /** \brief group that issues the request */
     int reqGroup;
 } request;
 

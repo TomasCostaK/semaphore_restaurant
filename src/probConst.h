@@ -60,10 +60,13 @@
 /** \brief chef is resting */
 #define  REST              2
 
+/* Waiter and receptionist state constants */
+
+/** \brief waiter or receptionist waits for request */
+#define  WAIT_FOR_REQUEST   0
+
 /* Waiter state constants */
 
-/** \brief waiter waits for food request */
-#define  WAIT_FOR_REQUEST   0
 /** \brief waiter takes food request to chef */
 #define  INFORM_CHEF        1
 /** \brief waiter takes food to table */
@@ -71,9 +74,9 @@
 
 /* Receptionist state constants */
 
-/** \brief waiter waits for food request */
+/** \brief receptionist performs checkin */
 #define  ASSIGNTABLE        1
-/** \brief waiter reiceives payment */
+/** \brief receptionist reiceives payment */
 #define  RECVPAY            2
 
 

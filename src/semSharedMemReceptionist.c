@@ -122,7 +122,7 @@ int main (int argc, char *argv[])
         req = waitForGroup();
         switch(req.reqType) {
             case TABLEREQ:
-                   provideTableOrWaitingRoom(req.reqGroup); //TODO param should be groupid
+                   provideTableOrWaitingRoom(req.reqGroup); 
                    break;
             case BILLREQ:
                    receivePayment(req.reqGroup);

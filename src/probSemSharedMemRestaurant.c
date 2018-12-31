@@ -110,10 +110,20 @@ int main (int argc, char *argv[])
 
     /* parse config file */
     fscanf(fp,"%*[^\n]");
-    fscanf(fp,"%d ",&sh->fSt.nGroups);
+    if(fscanf(fp,"%d ",&sh->fSt.nGroups)!=1) {
+        perror ("error parsing config.txt");
+        exit (EXIT_FAILURE);
+    }
+    if(sh->fSt.nGroups>MAXGROUPS) {
+        perror ("number of groups above maximum in connfig.txt");
+        exit (EXIT_FAILURE);
+    }
     fscanf(fp,"%*[^\n]");
     for(g=0;g < sh->fSt.nGroups;g++) {
-       fscanf(fp,"%d %d", &sh->fSt.startTime[g], &sh->fSt.eatTime[g]);
+       if(fscanf(fp,"%d %d", &sh->fSt.startTime[g], &sh->fSt.eatTime[g])!=2) {
+          perror ("error parsing config.txt");
+          exit (EXIT_FAILURE);
+       }
     }
    
     /* create log file */
