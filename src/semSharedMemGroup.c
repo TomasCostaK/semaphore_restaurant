@@ -187,6 +187,7 @@ static void eat (int id)
 static void checkInAtReception(int id)
 {
     // TODO insert your code here
+    //SemDown
 
     if (semDown (semgid, sh->mutex) == -1) {                                                  /* enter critical region */
         perror ("error on the down operation for semaphore access (CT)");
@@ -194,6 +195,7 @@ static void checkInAtReception(int id)
     }
 
     // TODO insert your code here
+    //saveState
 
     if (semUp (semgid, sh->mutex) == -1) {                                                      /* exit critical region */
         perror ("error on the up operation for semaphore access (CT)");
@@ -201,6 +203,7 @@ static void checkInAtReception(int id)
     }
 
     // TODO insert your code here
+    //SemDown
 
 }
 
@@ -217,12 +220,15 @@ static void checkInAtReception(int id)
 static void orderFood (int id)
 {
     // TODO insert your code here
+    //SemDown
 
     if (semDown (semgid, sh->mutex) == -1) {                                                  /* enter critical region */
         perror ("error on the down operation for semaphore access (CT)");
         exit (EXIT_FAILURE);
     }
 
+    //SemUp , este vai ser o que na rc? wtf
+    //SaveState
     // TODO insert your code here
 
     if (semUp (semgid, sh->mutex) == -1) {                                                     /* exit critical region */
@@ -230,6 +236,7 @@ static void orderFood (int id)
         exit (EXIT_FAILURE);
     }
 
+    //SemDown
     // TODO insert your code here
 }
 
@@ -250,12 +257,14 @@ static void waitFood (int id)
     }
 
     // TODO insert your code here
+    //SaveState
 
     if (semUp (semgid, sh->mutex) == -1) {                                                  /* enter critical region */
         perror ("error on the down operation for semaphore access (CT)");
         exit (EXIT_FAILURE);
     }
 
+    //SemDown
     // TODO insert your code here
 
     if (semDown (semgid, sh->mutex) == -1) {                                                  /* enter critical region */
@@ -264,6 +273,7 @@ static void waitFood (int id)
     }
 
     // TODO insert your code here
+    //SaveState
 
     if (semUp (semgid, sh->mutex) == -1) {                                                  /* enter critical region */
         perror ("error on the down operation for semaphore access (CT)");
@@ -285,6 +295,7 @@ static void waitFood (int id)
 static void checkOutAtReception (int id)
 {
     // TODO insert your code here
+    //SemDown
 
     if (semDown (semgid, sh->mutex) == -1) {                                                  /* enter critical region */
         perror ("error on the down operation for semaphore access (CT)");
@@ -292,6 +303,8 @@ static void checkOutAtReception (int id)
     }
 
     // TODO insert your code here
+    //SaveState
+    //SemUp
 
     if (semUp (semgid, sh->mutex) == -1) {                                                  /* enter critical region */
         perror ("error on the down operation for semaphore access (CT)");
@@ -299,6 +312,7 @@ static void checkOutAtReception (int id)
     }
 
     // TODO insert your code here
+    //SemDown
 
     if (semDown (semgid, sh->mutex) == -1) {                                                  /* enter critical region */
         perror ("error on the down operation for semaphore access (CT)");
@@ -306,6 +320,7 @@ static void checkOutAtReception (int id)
     }
 
     // TODO insert your code here
+    //SaveState
 
     if (semUp (semgid, sh->mutex) == -1) {                                                  /* enter critical region */
         perror ("error on the down operation for semaphore access (CT)");

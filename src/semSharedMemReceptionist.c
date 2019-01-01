@@ -149,9 +149,10 @@ int main (int argc, char *argv[])
  */
 static int decideTableOrWait(int n)
 {
-     //TODO insert your code here
+    //jle, je, jne
+    //TODO insert your code here
 
-     return -1;
+    return -1;
 }
 
 /**
@@ -164,7 +165,8 @@ static int decideTableOrWait(int n)
  */
 static int decideNextGroup()
 {
-     //TODO insert your code here
+    //usar grouprecord, jne
+    //TODO insert your code here
 
      return -1;
 }
@@ -181,6 +183,8 @@ static int decideNextGroup()
 static request waitForGroup()
 {
     request ret; 
+
+    //rc entrar save state e sair, 2 sem down e 2 sem up 
 
     if (semDown (semgid, sh->mutex) == -1)  {                                                  /* enter critical region */
         perror ("error on the up operation for semaphore access (WT)");
@@ -250,6 +254,8 @@ static void provideTableOrWaitingRoom (int n)
         exit (EXIT_FAILURE);
     }
 
+    //save state, decide table or wait
+    //if 1 deles, dar +1 semup la dentro,
     // TODO insert your code here
 
     if (semUp (semgid, sh->mutex) == -1) {                                               /* exit critical region */
@@ -280,11 +286,14 @@ static void receivePayment (int n)
     sh->fSt.st.receptionistStat = RECVPAY;
     saveState(nFic,&sh->fSt);
 
+    //jle com decideNextGroup +semUp ou simplesmente semUp da RC
+
     if (semUp (semgid, sh->mutex) == -1)  {                                                  /* exit critical region */
      perror ("error on the down operation for semaphore access (WT)");
         exit (EXIT_FAILURE);
     }
 
+    //SemUp
     // TODO insert your code here
 }
 
