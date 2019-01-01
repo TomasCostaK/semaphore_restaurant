@@ -188,6 +188,8 @@ static request waitForGroup()
     }
 
     // TODO insert your code here
+    sh->fSt.st.receptionistStat = ASSIGNTABLE;
+    saveState(nFic,&sh->fSt);
     
     if (semUp (semgid, sh->mutex) == -1)      {                                             /* exit critical region */
         perror ("error on the down operation for semaphore access (WT)");
@@ -195,13 +197,27 @@ static request waitForGroup()
     }
 
     // TODO insert your code here
+    if (semDown (semgid, sh->) == -1)  {                                                  /* enter critical region */
+        perror ("error on the up operation for semaphore access (WT)");
+        exit (EXIT_FAILURE);
+    }
 
     if (semDown (semgid, sh->mutex) == -1)  {                                                  /* enter critical region */
         perror ("error on the up operation for semaphore access (WT)");
         exit (EXIT_FAILURE);
     }
 
-    // TODO insert your code here
+    // TODO insert your code here´
+    //ver se grupo quer mesa ou pagar, secalhar vemos pelo record do grupo
+    if (/* condition */) {    
+        ret.reqType = BILLREQ;
+    }
+    else{
+        ret.reqType = TABLEREQ;
+    }
+
+    saveState(nFic,&sh->fSt);
+
 
     if (semUp (semgid, sh->mutex) == -1) {                                                  /* exit critical region */
      perror ("error on the down operation for semaphore access (WT)");
@@ -209,6 +225,10 @@ static request waitForGroup()
     }
 
     // TODO insert your code here
+    if (semUp (semgid, sh->) == -1) {                                                  /* exit critical region */
+        perror ("error on the down operation for semaphore access (WT)");
+        exit (EXIT_FAILURE);
+    }
 
     return ret;
 
@@ -257,6 +277,8 @@ static void receivePayment (int n)
     }
 
     // TODO insert your code here
+    sh->fSt.st.receptionistStat = ASSIGNTABLE;
+    saveState(nFic,&sh->fSt);
 
     if (semUp (semgid, sh->mutex) == -1)  {                                                  /* exit critical region */
      perror ("error on the down operation for semaphore access (WT)");
