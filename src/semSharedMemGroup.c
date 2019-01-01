@@ -70,7 +70,7 @@ int main (int argc, char *argv[])
         return EXIT_FAILURE;
     }
     else {
-     //  freopen (argv[4], "w", stderr);
+       freopen (argv[4], "w", stderr);
        setbuf(stderr,NULL);
     }
 
@@ -183,8 +183,6 @@ static void eat (int id)
  *  The internal state should be saved.
  *
  *  \param id group id
- *
- *  \return true if first group, false otherwise
  */
 static void checkInAtReception(int id)
 {

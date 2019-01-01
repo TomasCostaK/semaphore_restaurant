@@ -11,15 +11,15 @@ MAIN         = probSemSharedMemRestaurant
 
 OBJS = sharedMemory.o semaphore.o logging.o
 
-.PHONY: all ct ct_ch all_bin \
+.PHONY: all gr wt ch rt all_bin \
 	clean cleanall
 
-all:		group         waiter      chef       receptionist     main clean
-gr:		    group         waiter_bin  chef_bin   receptionist_bin main clean
-wt:		    group_bin     waiter      chef_bin   receptionist_bin main clean
-ch:		    group_bin     waiter_bin  chef       receptionist_bin main clean
-rt:		    group_bin     waiter_bin  chef_bin   receptionist     main clean
-all_bin:	group_bin     waiter_bin  chef_bin   receptionist_bin main clean
+all:		clean  group         waiter      chef       receptionist     main clean
+gr:		    clean  group         waiter_bin  chef_bin   receptionist_bin main clean
+wt:		    clean  group_bin     waiter      chef_bin   receptionist_bin main clean
+ch:		    clean  group_bin     waiter_bin  chef       receptionist_bin main clean
+rt:		    clean  group_bin     waiter_bin  chef_bin   receptionist     main clean
+all_bin:	clean  group_bin     waiter_bin  chef_bin   receptionist_bin main clean
 
 chef:	$(CHEF).o $(OBJS)
 	$(CC) -o ../run/$@ $^ -lm

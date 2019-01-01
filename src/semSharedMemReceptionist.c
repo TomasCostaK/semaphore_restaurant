@@ -277,7 +277,7 @@ static void receivePayment (int n)
     }
 
     // TODO insert your code here
-    sh->fSt.st.receptionistStat = ASSIGNTABLE;
+    sh->fSt.st.receptionistStat = RECVPAY;
     saveState(nFic,&sh->fSt);
 
     if (semUp (semgid, sh->mutex) == -1)  {                                                  /* exit critical region */
