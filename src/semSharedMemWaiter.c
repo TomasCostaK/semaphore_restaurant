@@ -165,7 +165,7 @@ static request waitForClientOrChef()
 
     //verificar se e chef ou nao, mais qulquer coisa
     // semdown e semup aqui dentro, mudar valor de request req
-    if (/* condition */) {    
+    if () {    
         req.reqType = FOODREQ;
     }
     else{
