@@ -181,7 +181,7 @@ static void processOrder (){
         //TODO insert your code here
     sh->fSt.st.chefStat = WAIT_FOR_ORDER;
     sh->fSt.waiterRequest.reqGroup=lastGroup;
-    sh->fSt.waiterRequest.reqGroup=FOODREADY;
+    sh->fSt.waiterRequest.reqType=FOODREADY;
     saveState(nFic,&sh->fSt);
 
     if (semUp (semgid, sh->mutex) == -1) {                                                      /* exit critical region */
