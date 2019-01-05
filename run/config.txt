@@ -1,5 +1,5 @@
 #ngroups
-3
+2
 #startTime timeToEat
 1000 250 
 1100 300

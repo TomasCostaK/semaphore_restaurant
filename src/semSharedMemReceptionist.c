@@ -152,24 +152,22 @@ static int decideTableOrWait(int n)
 	//percorrer array mesas, se mais de maxtables estiverem usadas, return -1, else return tableid
 	//ver se o grupo ja comeu pq pode estar assigned e dps acabar de comer
     //TODO insert your code here
-    int cont = 0;
+    int flagMesa0 = 0, flagMesa1 = 0;
     for (int i = 0; i <= sh->fSt.nGroups; i++)
 	{
-		if (groupRecord[i] == ATTABLE)
-		{	
-			cont++;
-		}
+		if (sh->fSt.assignedTable[i] == 0 && groupRecord[n] != DONE)
+			flagMesa0 = 1;
+		else if(sh->fSt.assignedTable[i] == 1 && groupRecord[n] != DONE)
+			flagMesa1 = 1;
 	}
-	if(cont >= NUMTABLES)
-		return -1
-		
-			
-	groupRecord[n]=WAIT;
-		
-	for (t = 0; t < NUMTABLES; t++)
-	{
-		if(t)
-	}
+	
+	if(flagMesa0 == 1 && flagMesa1 == 1)
+		return -1;
+	if(flagMesa0 == 1)
+		return 1;
+	return 0;
+	//Estamos a retornar o numero de mesas disponiveis e nao o id da mesa
+
 }
 
 /**
@@ -182,25 +180,14 @@ static int decideTableOrWait(int n)
  */
 static int decideNextGroup()
 {
-	if(sh->fSt.groupsWaiting == 0)
-		return -1;
-    
-    int min = 10000000,grid = -1;
-    
-    //Percorrer todos os grupos e ver basicamente se estiverem a espera, quem chegou mais cedo
-    for (int i = 0; i < sh->fSt.nGroups; i++)
+	
+	for (int i = 0; i < sh->fSt.nGroups; i++)
 	{
-		if (groupRecord[i] == WAIT)
-		{
-			if(sh->fSt.startTime[i] < min){
-				min = sh->fSt.startTime[i];
-				grid = i;
-			}
-		}
+		if(groupRecord[i] == WAIT)
+			return i;
 	}
-	//fazer if aqui?
-	groupRecord[grid] = ATTABLE;
-	return grid;
+	return -1;
+	//os grupos entram no groupRec por ordem logo o primeiro em WAIT e quem esta a mais tempo
     
 }
 
@@ -245,7 +232,7 @@ static request waitForGroup()
     }
     
 	ret = sh->fSt.receptionistRequest;
-	groupRecord[ret.reqGroup] = TOARRIVE;
+	groupRecord[ret.reqGroup] = WAIT;
 
     if (semUp (semgid, sh->receptionistRequestPossible) == -1) {                                                  /* exit critical region */
      perror ("error on the down operation for semaphore access (WT)");
@@ -287,7 +274,7 @@ static void provideTableOrWaitingRoom (int n)
     int fl = decideTableOrWait(n);
 	if (fl == -1)
 	{
-		groupRecord[n]=WAIT;
+		//groupRecord[n]=WAIT;
 		sh->fSt.groupsWaiting++;
 		
 	}
@@ -333,6 +320,14 @@ static void receivePayment (int n)
     //no do prof o id do grupo da reset, ou seja volta a 0 se o 0 comer e acabar
     sh->fSt.st.receptionistStat = RECVPAY;
     saveState(nFic,&sh->fSt);
+	
+	int tableId = sh->fSt.assignedTable[n];
+
+	if (semUp (semgid, sh->tableDone[tableId]) == -1)  {                                                  
+		perror ("error on the down operation for semaphore access (WT)");
+        exit (EXIT_FAILURE);
+    }
+    	
 	groupRecord[n]= DONE;
 
 	int grid = decideNextGroup();
@@ -345,7 +340,7 @@ static void receivePayment (int n)
 		}
 		//o n tem o grupo que estava na mesa que vai ficar livre
 		groupRecord[grid] = ATTABLE;
-		sh->fSt.assignedTable[grid] = sh->fSt.assignedTable[n];
+		sh->fSt.assignedTable[grid] = tableId;
 		sh->fSt.assignedTable[n] = -1;
 		
 		if (sh->fSt.groupsWaiting > 0)
@@ -358,11 +353,5 @@ static void receivePayment (int n)
         exit (EXIT_FAILURE);
     }
 
-	//encontrar id da mesa
-	if (semUp (semgid, sh->tableDone[n]) == -1)  {                                                  
-     perror ("error on the down operation for semaphore access (WT)");
-        exit (EXIT_FAILURE);
-    }
-    // TODO insert your code here
 }
 
