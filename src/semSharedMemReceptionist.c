@@ -122,7 +122,7 @@ int main (int argc, char *argv[])
         req = waitForGroup();
         switch(req.reqType) {
             case TABLEREQ:
-                   provideTableOrWaitingRoom(nReq % 2); //TODO param should be groupid
+                   provideTableOrWaitingRoom(req.reqGroup); //TODO param should be groupid
                    break;
             case BILLREQ:
                    receivePayment(req.reqGroup);
@@ -152,12 +152,21 @@ static int decideTableOrWait(int n)
 	//percorrer array mesas, se mais de maxtables estiverem usadas, return -1, else return tableid
 	//ver se o grupo ja comeu pq pode estar assigned e dps acabar de comer
     //TODO insert your code here
+    // int cont = 0;
+    // for (int i = 0; i <= sh->fSt.nGroups; i++)
+	// {
+	// 	if (groupRecord[n] == ATTABLE)
+    //         cont++;
+	// }
+
+    // return (cont>=NUMTABLES) ? -1:cont;
+
     int flagMesa0 = 0, flagMesa1 = 0;
     for (int i = 0; i <= sh->fSt.nGroups; i++)
 	{
-		if (sh->fSt.assignedTable[i] == 0 && groupRecord[n] != DONE)
+		if (sh->fSt.assignedTable[i] == 0)
 			flagMesa0 = 1;
-		else if(sh->fSt.assignedTable[i] == 1 && groupRecord[n] != DONE)
+		else if(sh->fSt.assignedTable[i] == 1)
 			flagMesa1 = 1;
 	}
 	
